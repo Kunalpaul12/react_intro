@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useMemo } from "react";
+import { ThemeContext, light } from "./Tutorial/useContext/themeContext";
+import { ThemeInfo } from "./Tutorial/useContext/themeInfo";
 
 function App() {
+  const [themeValue, setThemeValue] = useState(light);
+  const themeMemo = useMemo(
+    () => ({
+      themeValue,
+      setThemeValue,
+    }),
+    [themeValue, setThemeValue]
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeContext.Provider value={themeMemo}>
+        <ThemeInfo />
+      </ThemeContext.Provider>
     </div>
   );
 }
